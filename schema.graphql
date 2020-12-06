@@ -1,0 +1,35 @@
+type Axie @entity {
+  "Axie id"
+  id: ID!
+  "Axies genes"
+  genes: BigInt
+  "Axies current master"
+  owner: Master
+}
+
+type Master @entity {
+  "Master's address"
+  id: ID!
+  "Master's axies"
+  axies: [Axie!] @derivedFrom(field: "owner")
+}
+
+type TransferAxie @entity {
+  "Transfer transaction hash"
+  id: ID!
+  "Transferred axie"
+  axie: Axie!
+  "Previous master"
+  from: Master
+  "New master"
+  to: Master
+}
+
+type Counter @entity {
+  id: ID!
+  "Axies created"
+  axiescount: BigInt
+  ""
+  masterscount: BigInt
+}
+

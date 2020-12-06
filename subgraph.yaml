@@ -1,0 +1,42 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ax
+    network: mainnet
+    source:
+      address: "0xF5b0A3eFB8e8E4c201e2A935F110eAaF3FFEcb8d"
+      abi: ax
+      startBlock: 9775160
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - AxieSpawned
+        - AxieRebirthed
+        - AxieRetired
+        - AxieEvolved
+        - Transfer
+        - Approval
+        - ApprovalForAll
+      abis:
+        - name: ax
+          file: ./abis/ax.json
+      eventHandlers:
+        - event: AxieSpawned(indexed uint256,indexed address,uint256)
+          handler: handleAxieSpawned
+        - event: AxieRebirthed(indexed uint256,uint256)
+          handler: handleAxieRebirthed
+        - event: AxieRetired(indexed uint256)
+          handler: handleAxieRetired
+        - event: AxieEvolved(indexed uint256,uint256,uint256)
+          handler: handleAxieEvolved
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+      file: ./src/mapping.ts
